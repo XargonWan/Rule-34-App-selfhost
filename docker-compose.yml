@@ -1,10 +1,35 @@
-version: '3.8'
-
 services:
   rule34-app:
     build: .
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
+      - PORT=${PORT:-3000}
+      - POCKETBASE_URL=http://pocketbase:8090
+    depends_on:
+      - pocketbase
     restart: unless-stopped
+    networks:
+      - rule34-network
+
+  pocketbase:
+    image: ghcr.io/muchobien/pocketbase:latest
+    volumes:
+      - pocketbase_data:/pb_data
+      - pocketbase_migrations:/pb_migrations
+      - pocketbase_public:/pb_public
+    environment:
+      - POCKETBASE_ENCRYPTION_KEY=${POCKETBASE_ENCRYPTION_KEY}
+    restart: unless-stopped
+    networks:
+      - rule34-network
+
+volumes:
+  pocketbase_data:
+  pocketbase_migrations:
+  pocketbase_public:
+
+networks:
+  rule34-network:
+    driver: bridge

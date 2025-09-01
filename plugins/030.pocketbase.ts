@@ -4,7 +4,7 @@ import PocketBase from 'pocketbase'
 export default defineNuxtPlugin(async ({ app }) => {
   const config = useRuntimeConfig()
 
-  const pb = new PocketBase('https://pocketbase.r34.app')
+  const pb = new PocketBase(config.public.POCKETBASE_URL || 'http://localhost:8090')
 
   // TODO: Store in localStorage for better caching
   const cookie = useCookie('pb_auth', {

@@ -245,6 +245,7 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
       NODE_ENV: process.env.NODE_ENV,
 
       API_URL: process.env.API_URL,
+      POCKETBASE_URL: process.env.POCKETBASE_URL || 'http://localhost:8090',
 
       SENTRY_DSN: process.env.SENTRY_DSN
     }
