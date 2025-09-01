@@ -126,25 +126,6 @@ docker-compose exec pocketbase /bin/sh
 docker-compose exec pocketbase /usr/local/bin/pocketbase --help
 ```
 
-### Quick PocketBase Access (for setup only)
-```bash
-# Use the helper script (recommended)
-./setup-pocketbase.sh --enable   # Enable access for setup
-./setup-pocketbase.sh --disable  # Disable after setup
-./setup-pocketbase.sh --logs     # View setup logs
-
-# Or manually:
-# Enable PocketBase access temporarily
-sed -i 's/# ports:/ports:/' docker-compose.yml
-sed -i 's/#   - "8090:8090"/  - "8090:8090"/' docker-compose.yml
-docker-compose down && docker-compose up -d
-
-# After setup, disable external access
-sed -i 's/ports:/# ports:/' docker-compose.yml
-sed -i 's/  - "8090:8090"/#   - "8090:8090"/' docker-compose.yml
-docker-compose down && docker-compose up -d
-```
-
 ## Social
 
 ### Twitter
