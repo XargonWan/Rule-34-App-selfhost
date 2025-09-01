@@ -16,6 +16,9 @@ COPY . .
 # Build the Nuxt application
 RUN npm run build
 
+# Prepare Nuxt for production (needs dev dependencies)
+RUN npm run postinstall
+
 # Install only production dependencies for runtime
 RUN npm ci --only=production && npm cache clean --force
 
