@@ -1,5 +1,5 @@
 # Use the official Node.js 22 image as the base image
-FROM node:22-alpine
+FROM node:22-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -19,8 +19,20 @@ RUN npm run build
 # Prepare Nuxt for production (needs dev dependencies)
 RUN npm run postinstall
 
+# Production stage
+FROM node:22-alpine AS production
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+
 # Install only production dependencies for runtime
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production --ignore-scripts && npm cache clean --force
+
+# Copy built application from builder stage
+COPY --from=builder /app/.output ./.output
 
 # Create a non-root user for security
 RUN addgroup -g 1001 -S nodejs

@@ -1,12 +1,13 @@
 services:
   rule34-app:
+    container_name: rule34-app
     build: .
     ports:
       - "${PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
       - PORT=${PORT:-3000}
-      - POCKETBASE_URL=http://pocketbase:8090
+      - POCKETBASE_URL=http://pocketbase:${POCKETBASE_PORT:-8090}
     depends_on:
       - pocketbase
     restart: unless-stopped
@@ -14,16 +15,23 @@ services:
       - rule34-network
 
   pocketbase:
+    container_name: rule34-app-pocketbase
+    ports:
+      - "${POCKETBASE_PORT:-8090}:8089"
     image: ghcr.io/muchobien/pocketbase:latest
     volumes:
       - pocketbase_data:/pb_data
       - pocketbase_migrations:/pb_migrations
       - pocketbase_public:/pb_public
+      - automation_tools/create-superuser.sh:/create-superuser.sh
     environment:
       - POCKETBASE_ENCRYPTION_KEY=${POCKETBASE_ENCRYPTION_KEY}
+      - POCKETBASE_SUPERUSER_EMAIL=${POCKETBASE_SUPERUSER_EMAIL}
+      - POCKETBASE_SUPERUSER_PASSWORD=${POCKETBASE_SUPERUSER_PASSWORD}
     restart: unless-stopped
     networks:
       - rule34-network
+    command: sh -c "/create-superuser.sh && /usr/local/bin/pocketbase serve --http=0.0.0.0:8089"
 
 volumes:
   pocketbase_data:
