@@ -105,7 +105,17 @@ PocketBase is now running internally for security. To access the admin interface
    ```
 
 2. **Access PocketBase admin at:** http://localhost:8090/_/
-3. **After setup, comment out the ports again for security**
+3. **Create your first superuser account** when prompted by PocketBase
+
+**Important:** PocketBase will show a URL in the logs for creating your first superuser account. Copy that URL and open it in your browser to complete the setup.
+
+**What happens after creating the superuser:**
+- PocketBase will be fully set up with an admin account
+- You can access the admin panel anytime by temporarily enabling the port
+- The app will be able to connect to PocketBase for user authentication and premium features
+- Your data will be stored securely in the PocketBase database
+
+**Note:** This is a one-time setup process. Once the superuser is created, PocketBase will remember it for future runs.
 
 Alternatively, you can access PocketBase from within the Docker network:
 ```bash
@@ -118,6 +128,12 @@ docker-compose exec pocketbase /usr/local/bin/pocketbase --help
 
 ### Quick PocketBase Access (for setup only)
 ```bash
+# Use the helper script (recommended)
+./setup-pocketbase.sh --enable   # Enable access for setup
+./setup-pocketbase.sh --disable  # Disable after setup
+./setup-pocketbase.sh --logs     # View setup logs
+
+# Or manually:
 # Enable PocketBase access temporarily
 sed -i 's/# ports:/ports:/' docker-compose.yml
 sed -i 's/#   - "8090:8090"/  - "8090:8090"/' docker-compose.yml
@@ -223,6 +239,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 - **App can't connect to PocketBase**: Check that both services are running with `docker-compose ps`
 - **Can't access PocketBase admin**: PocketBase port is not exposed externally for security. See PocketBase Setup section for access instructions
+- **PocketBase shows setup URL but can't access it**: Make sure you've uncommented the ports in docker-compose.yml and restarted the services
 - **Data not persisting**: Ensure Docker volumes are properly created with `docker volume ls`
 - **Port conflicts**: Change the PORT in .env file if port 3000 is already in use
 - **Can't access the app**: Make sure the PORT variable matches between .env and docker-compose.yml
