@@ -7,6 +7,9 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=${PORT:-3000}
+      - HOST=0.0.0.0
+      - HOST_IP=${HOST_IP:-localhost}
+      - API_URL=http://${HOST_IP:-localhost}:${PORT:-3000}
       - POCKETBASE_URL=http://pocketbase:8089
     depends_on:
       - pocketbase

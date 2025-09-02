@@ -19,60 +19,19 @@
 
   const emit = defineEmits(['update:modelValue'])
 
-  const { isPremium } = useUserData()
-  const { tutorialDomainSwitcher } = useAppStatistics()
-
   function onModelValueChange(domain: Domain) {
-    // Premium prompt
-    if (domain.isPremium && !isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 4
-      promptPremium.value = true
-      return
-    }
-
-    // Danbooru media blocked tutorial
-    if (
-      //
-      domain.domain === 'danbooru.donmai.us' &&
-      !isPremium.value
-    ) {
-      toast.info('Media blocked 😢', {
-        description:
-          "We're just as frustrated as you; Danbooru has blocked us from showing images and videos. The only way we can help you see Danbooru content is with Premium, which lets us securely proxy their media for you.",
-        duration: 1000 * 15, // 15 seconds
-        action: {
-          label: 'Proxy media',
-          onClick: () => {
-            window.location.href = '/premium?utm_source=internal&utm_medium=danbooru-media-blocked'
-          }
-        }
-      })
-    }
-
     emit('update:modelValue', domain)
   }
 
   function shouldBooruBeDisabled(booru: Domain) {
-    if (booru.isPremium && !isPremium.value) {
-      return true
-    }
-
-    return false
+    return booru.isPremium
   }
 
   function onDomainSelectorClick() {
-    if (tutorialDomainSwitcher.value) {
-      return
-    }
-
     toast.info('Domain Switcher', {
       description: 'Switch between Booru websites: each one has unique content, find the one you like the most!',
       duration: 10000
     })
-
-    tutorialDomainSwitcher.value = true
   }
 </script>
 

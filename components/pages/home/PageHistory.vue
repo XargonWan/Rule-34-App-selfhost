@@ -2,7 +2,6 @@
   import { formatTimeAgo } from '@vueuse/core'
   import { XMarkIcon } from '@heroicons/vue/20/solid'
 
-  const { isPremium } = useUserData()
   const { pageHistory } = usePageHistory()
 
   function historyPathToTitle(path: string) {
@@ -34,14 +33,7 @@
   }
 
   function onHistoryItemClick(path: string) {
-    if (!isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 3
-      promptPremium.value = true
-      return
-    }
-
+    // Naviga sempre, premium rimosso
     navigateTo(path)
   }
 

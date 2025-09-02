@@ -4,68 +4,6 @@
   <div
     class="relative isolate overflow-hidden bg-transparent px-6 pb-12 pt-16 shadow-2xl sm:rounded-3xl sm:px-24 sm:py-28"
   >
-    <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-base-content-highlight sm:text-4xl">
-      Premium Giveaway
-    </h2>
-
-    <p class="mx-auto mt-2 max-w-xl text-center text-lg leading-8">
-      Join our newsletter to participate in our monthly giveaways!
-    </p>
-
-    <form
-      action="https://mailcoach.akbal.dev/subscribe/a97031df-b6c5-47f3-8c09-1d373fcc907d"
-      class="mx-auto mt-10 flex max-w-md gap-x-4"
-      method="post"
-      target="_blank"
-    >
-      <label
-        class="sr-only"
-        for="email-address"
-        >Email address</label
-      >
-
-      <input
-        id="email-address"
-        autocomplete="email"
-        class="focus-visible:focus-outline-util min-w-0 flex-auto rounded-md border-0 bg-base-0/10 px-3.5 py-2 text-base-content-highlight ring-1 ring-inset ring-base-0/10 sm:text-sm sm:leading-6"
-        name="email"
-        placeholder="Enter your email"
-        required
-        type="email"
-      />
-
-      <!-- Honeypot -->
-      <div style="position: absolute; left: -9999px">
-        <label for="name">Your name</label>
-        <input
-          id="name"
-          autocomplete="nope"
-          name="name"
-          tabindex="-1"
-          type="text"
-        />
-      </div>
-
-      <button
-        class="focus-visible:focus-outline-util hover:hover-bg-util hover:hover-text-util flex-none rounded-md bg-base-1000 px-3.5 py-2.5 text-sm font-medium ring-1 ring-base-0/20"
-        type="submit"
-      >
-        Notify me
-      </button>
-    </form>
-
-    <p class="mx-auto mt-10 text-center text-sm leading-6">
-      Unsubscribe anytime
-      <br />
-      We care about your data, read our
-      <NuxtLink
-        class="hover:hover-text-util focus-visible:focus-outline-util"
-        href="/privacy-policy"
-      >
-        privacy&nbsp;policy
-      </NuxtLink>
-    </p>
-
     <!-- Background -->
     <svg
       aria-hidden="true"

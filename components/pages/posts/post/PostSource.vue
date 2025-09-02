@@ -9,9 +9,6 @@
     postFileUrl: string
   }>()
 
-  const { isPremium } = useUserData()
-  const { tutorialPostSource } = useAppStatistics()
-
   const imageAnimeRelatedServiceOptions = [
     {
       title: 'Find with SauceNAO',
@@ -69,28 +66,14 @@
   }
 
   function openSourceFinder(url: string) {
-    if (!isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 7
-      promptPremium.value = true
-      return
-    }
-
     window.open(url, '_blank')
   }
 
   function onMenuOpen() {
-    if (tutorialPostSource.value) {
-      return
-    }
-
     toast.info('Post Source', {
       description: 'Go to the source (artist) if it exists, or find it with reverse image search',
       duration: 10000
     })
-
-    tutorialPostSource.value = true
   }
 </script>
 

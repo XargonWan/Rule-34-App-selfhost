@@ -3,7 +3,7 @@
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
-  const { timesTheAppHasBeenOpened, promptInstallPwa, promptFeedback, promptNewsletter, promptReview } =
+  const { timesTheAppHasBeenOpened, promptInstallPwa, promptFeedback, promptNewsletter } =
     useAppStatistics()
 
   const isDialogReady = ref(false)
@@ -98,55 +98,6 @@
       },
       component: resolveComponent('LazyNewsletterPrompt'),
       closeableFromBackground: false
-    },
-
-    // Review prompt
-    {
-      condition: () => {
-        if (promptReview.value) {
-          return false
-        }
-
-        // Show after 12 times
-        if (timesTheAppHasBeenOpened.value < 12) {
-          return false
-        }
-
-        sleep(1000 * 3) // 3 seconds
-          .then(() => {
-            isDialogReady.value = true
-          })
-
-        return true
-      },
-      close: () => {
-        isDialogReady.value = false
-        promptReview.value = true
-      },
-      component: resolveComponent('LazyReviewPrompt'),
-      closeableFromBackground: false
-    },
-
-    // Premium Prompt
-    {
-      condition: () => {
-        const { open: promptPremium } = usePremiumDialog()
-
-        if (!promptPremium.value) {
-          return false
-        }
-
-        isDialogReady.value = true
-        return true
-      },
-      close: () => {
-        const { open } = usePremiumDialog()
-
-        isDialogReady.value = false
-        open.value = false
-      },
-      component: resolveComponent('LazyPremiumPrompt'),
-      closeableFromBackground: true
     }
   ]
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import Tag from '~/assets/js/tag.dto'
-  import { Cog6ToothIcon, PlusIcon, TagIcon } from '@heroicons/vue/24/outline'
+  import { PlusIcon, TagIcon } from '@heroicons/vue/24/outline'
   import { toast } from 'vue-sonner'
   import { TagCollection } from '~/assets/js/tagCollection.dto'
 
@@ -12,19 +12,9 @@
     updateSelectedTags: [selectedTags: Tag[]]
   }>()
 
-  const { isPremium } = useUserData()
-
   const { tagCollections } = useTagCollections()
 
   function setTagCollectionAsSelected(tagCollection: TagCollection) {
-    if (!isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 6
-      promptPremium.value = true
-      return
-    }
-
     const selectedTags = tagCollection.tags.map((tagName) => new Tag({ name: tagName }))
 
     emit('updateSelectedTags', selectedTags)
@@ -72,17 +62,6 @@
 
       <h4 class="text-sm">List of tags that you can create for easy access</h4>
     </header>
-
-    <div class="absolute top-0.5 right-0">
-      <NuxtLink
-        class="focus-visible:focus-outline-util hover:hover-text-util hover:hover-bg-util inline-flex w-full items-center gap-x-1.5 rounded-md p-1"
-        to="/premium/tag-collections"
-      >
-        <span class="sr-only"> Manage tag collections </span>
-
-        <Cog6ToothIcon aria-hidden="true" class="h-6 w-6" />
-      </NuxtLink>
-    </div>
 
     <!-- Body -->
     <section class="flex-auto overflow-y-auto">

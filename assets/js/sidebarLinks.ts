@@ -38,14 +38,14 @@ export const sidebarNavigation = [
       ]),
 
   {
-    name: 'F.A.Q.',
+    name: 'F.A.Q. (on Rule34.app)',
     icon: QuestionMarkCircleIcon,
 
     href: 'https://rule34.app/frequently-asked-questions',
     isExternal: true
   },
   {
-    name: 'Blog',
+    name: 'Blog (on Rule34.app)',
     icon: NewspaperIcon,
 
     href: `${project.urls.production.toString()}blog`,

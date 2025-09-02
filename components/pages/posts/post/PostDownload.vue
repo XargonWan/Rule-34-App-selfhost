@@ -14,17 +14,7 @@
     }
   })
 
-  const { isPremium } = useUserData()
-
   async function downloadMedia() {
-    if (!isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 5
-      promptPremium.value = true
-      return
-    }
-
     const proxiedUrl = proxyUrl(props.mediaUrl, props.mediaName)
 
     const anchorElement = document.createElement('a')

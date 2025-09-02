@@ -44,13 +44,5 @@
     </p>
 
     <p class="mt-2 text-xs">Offer ends {{ timeAgo }}</p>
-
-    <NuxtLink
-      class="hover:hover-text-util hover:hover-bg-util focus-visible:focus-outline-util bg-util text-base-content-highlight ring-base-0/20 mt-4 block w-full rounded-lg p-2 text-center font-bold tracking-tight text-pretty ring-2"
-      rel="nofollow noopener noreferrer"
-      to="/premium#pricing"
-    >
-      Use BLACKFRIDAY for 50% off
-    </NuxtLink>
   </div>
 </template>

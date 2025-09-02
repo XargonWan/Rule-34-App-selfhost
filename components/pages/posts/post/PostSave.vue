@@ -13,7 +13,6 @@
   const { $pocketBase } = useNuxtApp()
 
   const { savedPostList } = usePocketbase()
-  const { isPremium } = useUserData()
 
   const postInSavedList = computed(() => {
     return savedPostList.value.find(
@@ -26,19 +25,9 @@
   })
 
   async function onClick() {
-    if (!isPremium.value) {
-      const { open: promptPremium, currentIndex } = usePremiumDialog()
-
-      currentIndex.value = 2
-      promptPremium.value = true
-      return
-    }
-
     if (isPostSaved.value) {
       await deletePost()
-    }
-    //
-    else {
+    } else {
       await savePost()
     }
   }

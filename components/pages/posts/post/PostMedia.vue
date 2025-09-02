@@ -5,7 +5,6 @@
   import 'fluid-player/src/css/fluidplayer.css'
   import { proxyUrl } from 'assets/js/proxy'
 
-  const { isPremium } = useUserData()
   const { autoplayAnimatedMedia } = useUserSettings()
   let { timesVideoHasRendered } = useEthics()
 
@@ -170,64 +169,60 @@
       }
     }
 
-    if (!isPremium.value) {
-      timesVideoHasRendered.value++
-
-      // Only show pause roll ads every 2 videos
-      if (timesVideoHasRendered.value % 2 === 0) {
-        fluidPlayerOptions.vastOptions.adList.push(
-          // In-Video Banner
-          {
-            roll: 'onPauseRoll',
-            vastTag:
-              /**
-               * ExoClick
-               * Pros:
-               * Cons: Low revenue (7)
-               */
-              'https://s.magsrv.com/splash.php?idzone=5386214'
-          }
-        )
-      }
-      //
-
-      // Only show preroll ads after 3 videos, and every 3 videos
-      if (timesVideoHasRendered.value > 3 && timesVideoHasRendered.value % 3 === 0) {
-        fluidPlayerOptions.vastOptions.adList.push(
-          // In-Stream Video
-          {
-            roll: 'preRoll',
-            vastTag:
-              /**
-               * ExoClick
-               * Pros:
-               * Cons: Low revenue (9)
-               */
-              'https://s.magsrv.com/splash.php?idzone=5386496'
-
+    // Only show pause roll ads every 2 videos
+    if (timesVideoHasRendered.value % 2 === 0) {
+      fluidPlayerOptions.vastOptions.adList.push(
+        // In-Video Banner
+        {
+          roll: 'onPauseRoll',
+          vastTag:
             /**
-             * HilltopAds
+             * ExoClick
              * Pros:
-             * Cons: Low revenue (4)
+             * Cons: Low revenue (7)
              */
-            // 'https://ellipticaltrack.com/dCm.FXz/doGMNPv/Z-GhUX/OermX9/u-ZqUEltk/PYTgYBy/ODTZQI5oNHDDEHtdNbjLIS5eNvDhk/0uMGgu?limit=1'
+            'https://s.magsrv.com/splash.php?idzone=5386214'
+        }
+      )
+    }
+    //
 
+    // Only show preroll ads after 3 videos, and every 3 videos
+    if (timesVideoHasRendered.value > 3 && timesVideoHasRendered.value % 3 === 0) {
+      fluidPlayerOptions.vastOptions.adList.push(
+        // In-Stream Video
+        {
+          roll: 'preRoll',
+          vastTag:
             /**
-             * Clickadu
+             * ExoClick
              * Pros:
-             * Cons:
+             * Cons: Low revenue (9)
              */
-            // 'https://anewfeedliberty.com/ceef/gdt3g0/tbt/2034767/tlk.xml'
+            'https://s.magsrv.com/splash.php?idzone=5386496'
 
-            /**
-             * AdSession
-             * Pros:
-             * Cons:
-             */
-            // 'https://s.eunow4u.com/v1/vast.php?idzone=2310'
-          }
-        )
-      }
+          /**
+           * HilltopAds
+           * Pros:
+           * Cons: Low revenue (4)
+           */
+          // 'https://ellipticaltrack.com/dCm.FXz/doGMNPv/Z-GhUX/OermX9/u-ZqUEltk/PYTgYBy/ODTZQI5oNHDDEHtdNbjLIS5eNvDhk/0uMGgu?limit=1'
+
+          /**
+           * Clickadu
+           * Pros:
+           * Cons:
+           */
+          // 'https://anewfeedliberty.com/ceef/gdt3g0/tbt/2034767/tlk.xml'
+
+          /**
+           * AdSession
+           * Pros:
+           * Cons:
+           */
+          // 'https://s.eunow4u.com/v1/vast.php?idzone=2310'
+        }
+      )
     }
 
     videoPlayer = fluidPlayer(mediaElement.value as HTMLVideoElement, fluidPlayerOptions)
@@ -280,7 +275,6 @@
     // Proxy videos
     if (
       isVideo.value &&
-      isPremium.value &&
       //
       !triedToLoadWithProxy.value
     ) {
@@ -298,7 +292,7 @@
     }
 
     // Proxy GIFs
-    if (isAnimatedMedia.value && isPremium.value) {
+    if (isAnimatedMedia.value) {
       //
 
       // Case 1: The poster image failed to load
@@ -412,23 +406,6 @@
           >
             Try again?
           </button>
-        </div>
-
-        <!-- Premium promotion -->
-        <!-- TODO: Improve style -->
-        <div
-          v-if="!isPremium"
-          class="text-base-content text-xs"
-        >
-          <NuxtLink
-            class="hover:hover-text-util focus-visible:focus-outline-util underline"
-            href="/premium?utm_source=internal&utm_medium=media-error"
-          >
-            <!-- @formatter:off -->
-            Get Premium</NuxtLink
-          >
-
-          <span> to bypass website blocks</span>
         </div>
       </div>
     </template>

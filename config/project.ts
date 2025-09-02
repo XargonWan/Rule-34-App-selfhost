@@ -64,12 +64,12 @@ export interface ProjectConfig {
  * Main project configuration constant
  */
 export const project: ProjectConfig = {
-  name: 'Rule 34 App',
-  shortName: 'R34 App',
+  name: 'Rule 34 App - Selfhosted',
+  shortName: 'R34 App - Selfhosted',
   description:
     'Stream and download Rule 34 porn videos, GIFs, and images from multiple Boorus in a mobile-first web app',
   version: '3.2.0',
-  email: 'contact@r34.app',
+  email: 'self@hosted.app',
   urls: {
     production: new URL('https://r34.app'),
     development: new URL('http://localhost:3000')

@@ -200,13 +200,15 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
 
     '/img/**': {
       headers: {
-        'Cache-Control': 'public, max-age=31536000, immutable'
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Content-Security-Policy': "img-src 'self' http: https: data: blob:"
       }
     },
 
     '/js/**': {
       headers: {
-        'Cache-Control': 'public, max-age=86400'
+        'Cache-Control': 'public, max-age=86400',
+        'Content-Security-Policy': "script-src 'self' http: https:"
       }
     }
   },
@@ -220,6 +222,11 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
     esbuild: {
       options: {
         target: 'esnext'
+      }
+    },
+    routeRules: {
+      '/booru/**': {
+        proxy: 'http://pocketbase:8089/booru/**'
       }
     }
   },
@@ -247,7 +254,8 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
       API_URL: process.env.API_URL,
       POCKETBASE_URL: process.env.POCKETBASE_URL || 'http://localhost:8090',
 
-      SENTRY_DSN: process.env.SENTRY_DSN
+      SENTRY_DSN: process.env.SENTRY_DSN,
+      HOST_IP: process.env.HOST_IP
     }
   },
 
@@ -255,7 +263,7 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
   components: [{ path: '~/components', pathPrefix: false }],
 
   site: {
-    url: project.urls.production.toString()
+    url: `http://${process.env.HOST_IP || 'localhost'}:${process.env.PORT || '3000'}`
   },
 
   /**
@@ -416,8 +424,8 @@ _paq.push(['setExcludedQueryParams', ['page', 'cursor']])
   security: {
     headers: {
       contentSecurityPolicy: {
-        // Fix: disable HTTPS upgrade on development, otherwise Safari will fail to load the page
-        'upgrade-insecure-requests': process.env.NODE_ENV === 'production',
+        // Fix: disable HTTPS upgrade on development or when host is local IP
+        'upgrade-insecure-requests': false,
 
         // Fix: enable any origin for images
         'img-src': ["'self'", 'http:', 'https:', 'data:', 'blob:'],
